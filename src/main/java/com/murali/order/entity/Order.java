@@ -31,6 +31,7 @@ public class Order {
 
     @Column(unique = true)
     private String externalReference;
+    
     private String customerId;
 
     @CreatedDate

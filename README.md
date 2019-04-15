@@ -1,28 +1,44 @@
-# orderService
-part of order management system service
-
 ###Step 1 : Configure Postgres Database using docker
+
 ```bash
-$ docker run --name oms_postgres -p 5432:5432 -e POSTGRES_USER=dbuser -e POSTGRES_DB=orders_db -e POSTGRES_PASSWORD=password -d postgres
+$ docker run --name or_postgres --network my-net -p 5431:5432 -e POSTGRES_USER=or_dbuser -e POSTGRES_DB=order_db -e POSTGRES_PASSWORD=or_pass -d postgres
 ```
+
 Note : if the container is already running :
+
 ```bash
-$ docker start oms_postgres 
+$ docker start or_postgres 
 ```
+
 To create orders_db :
-```bash
-docker exec -it 5328f411af86 psql -d postgres -U dbuser -c "CREATE DATABASE orders_db;"
-docker exec -it 5328f411af86 psql -d postgres -U dbuser -c "GRANT ALL PRIVILEGES ON DATABASE orders_db TO dbuser;"
-```
-Once the DB is up and running configure its details in application.properties file
 
-####Build
 ```bash
-./gradlew build
+docker exec -it or_postgres psql -d postgres -U or_dbuser -c "CREATE DATABASE order_db;
+docker exec -it or_postgres psql -d postgres -U or_dbuser -c "GRANT ALL PRIVILEGES ON DATABASE order_db TO or_dbuser;
 ```
 
-###Run
+###Step 2: Build Order service using mvn
+
 ```bash
-./gradlew bootRun
+mvn clean install -DskipTests
 ```
-docker exec -it 5328f411af86 psql -d postgres -U dbuser
+
+###Step 3: Building the docker image from project
+
+```bash
+docker image build -f Dockerfile -t 'order:1.0.0' .
+```
+
+Once the above process is completed, you can verify whether the docker image is built successfully with following command.
+
+```bash
+docker image ls
+```
+
+###Step 4: Run the order service
+
+```bash
+docker run -d --name order --network my-net --link or_postgres:postgres -p 8081:8081 order:1.0.0
+```
+
+

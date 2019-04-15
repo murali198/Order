@@ -23,6 +23,7 @@ public class OrderResource {
 
     @Autowired
     private OrderRepository orderRepository;
+    
     @Autowired
     private ProductServiceProxy productServiceProxy;
 
