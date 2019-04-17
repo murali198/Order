@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "product", url = "product:8080")
+@FeignClient(name = "product", url = "http://${product-service.service.host}:${product-service.service.port}")
 @Service
 public interface ProductServiceProxy {
 
