@@ -15,5 +15,16 @@ spring:
             jdbc:
                lob:
                   non_contextual_creation: true
+   zipkin:
+      base-url: http://${zipkin-service_SERVICE_HOST}:${zipkin-service_SERVICE_PORT}/
+      
 server:
    port: 8081
+   
+logging:
+   level:
+      root: WARN
+      com:
+         murali:
+            order: DEBUG  
+            

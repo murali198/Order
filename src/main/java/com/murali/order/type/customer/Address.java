@@ -2,11 +2,13 @@ package com.murali.order.type.customer;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Builder
 @ToString
 @Getter
+@Setter
 public class Address {
     private String addressLine1;
     private String addressLine2;

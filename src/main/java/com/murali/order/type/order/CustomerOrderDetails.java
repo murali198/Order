@@ -4,6 +4,7 @@ import com.murali.order.type.customer.Customer;
 import com.murali.order.type.product.ItemDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
+@Setter
 public class CustomerOrderDetails {
 
     private Long orderId;

@@ -8,6 +8,9 @@ import com.murali.order.repo.OrderRepository;
 import com.murali.order.external.ProductServiceProxy;
 import com.murali.order.type.product.ItemDto;
 import com.murali.order.type.product.ItemRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
 @RestController
 public class OrderResource {
 
+	private static final Logger log = LoggerFactory.getLogger(OrderResource.class);
+	
     @Autowired
     private OrderRepository orderRepository;
     
@@ -29,6 +34,7 @@ public class OrderResource {
 
     @PostMapping("/orders")
     public Order save(@RequestBody CustomerOrderRequest request) {
+    	log.debug("Persisting the Order request ["+ request +"]");
         return orderRepository.save(Order
                 .builder()
                 .customerId(request.getCustomerId())
@@ -38,12 +44,14 @@ public class OrderResource {
 
     @GetMapping("/order")
     public List<CustomerOrderDetails> getCustomerOrders(@RequestParam String customerId) {
+    	log.debug("Getting the customer order with customer id ["+ customerId +"]");
         final List<Order> order = orderRepository.findByCustomerId(customerId);
         return order.stream().map(o -> toCustomerOrderDetails(o)).collect(Collectors.toList());
     }
 
     @GetMapping("/orders/{id}")
     public CustomerOrderDetails getOrders(@PathVariable("id") Long orderId) {
+    	log.debug("Getting the customer order with order id ["+ orderId +"]");
         final Order order = orderRepository.findById(orderId).orElse(null);
         if (order == null) {
             return null;
