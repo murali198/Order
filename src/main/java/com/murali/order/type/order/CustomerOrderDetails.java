@@ -24,4 +24,6 @@ public class CustomerOrderDetails {
     private List<ItemDto> items;
     private BigDecimal totalOrderCost;
     private BigDecimal totalOrderTax;
+    private String version;
+    
 }

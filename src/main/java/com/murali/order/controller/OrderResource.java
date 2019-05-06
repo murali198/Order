@@ -65,6 +65,7 @@ public class OrderResource {
                 .createdDate(order.getCreatedDate())
                 .externalReference(order.getExternalReference())
                 .items(toItemList(order.getItems()))
+                .version("v2")
                 .build();
     }
 
